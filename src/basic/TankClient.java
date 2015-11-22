@@ -7,6 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
+	private int x = 5;
+	private int y = 5;
 
 	public static void main(String[] args) {
 		TankClient tc = new TankClient();
@@ -28,6 +30,7 @@ public class TankClient extends Frame {
 			}
 
 		});
+		new Thread(new PaintThread()).start();
 	}
 
 	/*
@@ -40,9 +43,32 @@ public class TankClient extends Frame {
 		Color oldColor = g.getColor();
 		g.setColor(Color.RED);
 
-		g.fillOval(50, 50, 30, 30);
+		g.fillOval(x, y, 30, 30);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
+		x += 5;
+		y += 5;
+	}
+
+	/**
+	 * 重画
+	 * @author warrior
+	 *
+	 */
+	private class PaintThread implements Runnable {
+
+		@Override
+		public void run() {
+			while (true) {
+				repaint();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 }
