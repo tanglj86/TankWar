@@ -4,15 +4,19 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
-	private int x = 5;
-	private int y = 5;
-	
+	public static final int TANK_WIDTH = 30;
+	public static final int TANK_HEIGHT = 30;
+	private int xPosition = 50;
+	private int yPosition = 100;
+
 	Image offScreenImage = null;
 
 	public static void main(String[] args) {
@@ -27,6 +31,7 @@ public class TankClient extends Frame {
 		setBackground(Color.GREEN);
 		setResizable(false);
 		setVisible(true);
+		this.addKeyListener(new KeyMonitor());
 		this.addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -35,7 +40,7 @@ public class TankClient extends Frame {
 			}
 
 		});
-		new Thread(new PaintThread()).start();
+		 new Thread(new PaintThread()).start();
 	}
 
 	/*
@@ -48,16 +53,14 @@ public class TankClient extends Frame {
 		Color oldColor = g.getColor();
 		g.setColor(Color.RED);
 
-		g.fillOval(x, y, 30, 30);
+		g.fillOval(xPosition, yPosition, TANK_WIDTH, TANK_HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
-		x += 5;
-		y += 5;
 	}
-	
+
 	@Override
 	public void update(Graphics g) {
-		if(offScreenImage == null){
+		if (offScreenImage == null) {
 			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
 		}
 		Graphics graphics = offScreenImage.getGraphics();
@@ -71,6 +74,7 @@ public class TankClient extends Frame {
 
 	/**
 	 * 重画
+	 * 
 	 * @author warrior
 	 *
 	 */
@@ -88,6 +92,35 @@ public class TankClient extends Frame {
 			}
 		}
 
+	}
+
+	/**
+	 * 键盘的监听类
+	 * @author warrior
+	 *
+	 */
+	private class KeyMonitor extends KeyAdapter {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			int code = e.getKeyCode();
+			switch (code) {
+			case KeyEvent.VK_LEFT:
+				xPosition -= 5;
+				break;
+
+			case KeyEvent.VK_RIGHT:
+				xPosition += 5;
+				break;
+			case KeyEvent.VK_UP:
+				yPosition -= 5;
+				break;
+			case KeyEvent.VK_DOWN:
+				yPosition += 5;
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 }
