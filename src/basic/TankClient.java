@@ -8,15 +8,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import basic.Tank.Direction;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
 
 	Tank myTank = new Tank(30, 50, this);
-	Missile missile = null;
+	List<Missile> missiles = new ArrayList<Missile>();
 	Image offScreenImage = null;
 
 	public static void main(String[] args) {
@@ -43,17 +43,14 @@ public class TankClient extends Frame {
 		new Thread(new PaintThread()).start();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.Window#paint(java.awt.Graphics)
-	 */
 	@Override
 	public void paint(Graphics g) {
-
+		g.drawString("missiles count:" + missiles.size(), 20, 40);
 		myTank.draw(g);
-		if (missile != null)
-			missile.draw(g);
+		for (int i = 0; i < missiles.size(); i++) {
+			Missile m = missiles.get(i);
+			m.draw(g);
+		}
 	}
 
 	@Override
