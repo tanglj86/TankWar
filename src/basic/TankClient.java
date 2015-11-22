@@ -3,12 +3,17 @@ package basic;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
+	public static final int GAME_WIDTH = 800;
+	public static final int GAME_HEIGHT = 600;
 	private int x = 5;
 	private int y = 5;
+	
+	Image offScreenImage = null;
 
 	public static void main(String[] args) {
 		TankClient tc = new TankClient();
@@ -18,7 +23,7 @@ public class TankClient extends Frame {
 	public void lauchFrame(String name) {
 		setTitle(name);
 		setLocation(50, 50);
-		setSize(800, 600);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setBackground(Color.GREEN);
 		setResizable(false);
 		setVisible(true);
@@ -48,6 +53,20 @@ public class TankClient extends Frame {
 		g.setColor(oldColor);
 		x += 5;
 		y += 5;
+	}
+	
+	@Override
+	public void update(Graphics g) {
+		if(offScreenImage == null){
+			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		}
+		Graphics graphics = offScreenImage.getGraphics();
+		Color color = graphics.getColor();
+		graphics.setColor(Color.GREEN);
+		graphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		graphics.setColor(color);
+		paint(graphics);
+		g.drawImage(offScreenImage, 0, 0, null);
 	}
 
 	/**
