@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-	public static final int TANK_WIDTH = 30;
-	public static final int TANK_HEIGHT = 30;
+	public static final int WIDTH = 30;
+	public static final int HEIGHT = 30;
 	// 移动的距离
 	public static final int SPEEDX = 10;
 	public static final int SPEEDY = 10;
@@ -43,7 +43,7 @@ public class Tank {
 		Color oldColor = g.getColor();
 		g.setColor(Color.RED);
 		move();
-		g.fillOval(x, y, TANK_WIDTH, TANK_HEIGHT);
+		g.fillOval(x, y, WIDTH, HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
 	}
@@ -151,6 +151,8 @@ public class Tank {
 	}
 
 	public Missile fire() {
+		int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+		int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
 		Missile m = new Missile(x, y, dir);
 		return m;
 	}

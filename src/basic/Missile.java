@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import basic.Tank.Direction;
 
 public class Missile {
-	public static final int MISSILE_WIDTH = 5;
-	public static final int MISSILE_HEIGHT = 5;
+	public static final int WIDTH = 5;
+	public static final int HEIGHT = 5;
 	private static final int SPEEDX = 15;
 	private static final int SPEEDY = 15;
 	private int x, y;
@@ -22,7 +22,7 @@ public class Missile {
 	public void draw(Graphics g) {
 		Color c = g.getColor();
 		move();
-		g.fillOval(x, y, MISSILE_WIDTH, MISSILE_HEIGHT);
+		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(Color.BLACK);
 		g.setColor(c);
 	}
