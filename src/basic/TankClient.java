@@ -9,11 +9,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import basic.Tank.Direction;
+
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
 
-	Tank myTank = new Tank(30, 50);
+	Tank myTank = new Tank(30, 50, this);
+	Missile missile = null;
 	Image offScreenImage = null;
 
 	public static void main(String[] args) {
@@ -47,7 +50,10 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g) {
+
 		myTank.draw(g);
+		if (missile != null)
+			missile.draw(g);
 	}
 
 	@Override
@@ -97,6 +103,7 @@ public class TankClient extends Frame {
 		public void keyPressed(KeyEvent e) {
 			myTank.keyPressed(e);
 		}
+
 		@Override
 		public void keyReleased(KeyEvent e) {
 			myTank.keyReleased(e);

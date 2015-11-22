@@ -16,6 +16,8 @@ public class Tank {
 	private boolean bU = false;
 	private boolean bD = false;
 
+	TankClient tc = null;
+	
 	enum Direction {
 		L, LU, LD, R, RU, RD, U, D, STOP
 	};
@@ -25,6 +27,11 @@ public class Tank {
 	public Tank(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Tank(int x, int y, TankClient tc) {
+		this(x,y);
+		this.tc = tc;
 	}
 
 	/**
@@ -80,6 +87,9 @@ public class Tank {
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
+		case KeyEvent.VK_CONTROL:
+			tc.missile = fire();
+			break;
 		case KeyEvent.VK_LEFT:
 			bL = true;
 			break;
@@ -97,6 +107,7 @@ public class Tank {
 		}
 		locateDirection();
 	}
+
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
@@ -117,6 +128,7 @@ public class Tank {
 		}
 		locateDirection();
 	}
+
 	private void locateDirection() {
 		if (bL && !bU && !bR && !bD)
 			dir = Direction.L;
@@ -136,6 +148,11 @@ public class Tank {
 			dir = Direction.LD;
 		else if (!bL && !bU && !bR && !bD)
 			dir = Direction.STOP;
+	}
+
+	public Missile fire() {
+		Missile m = new Missile(x, y, dir);
+		return m;
 	}
 
 }
