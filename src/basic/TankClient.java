@@ -12,11 +12,8 @@ import java.awt.event.WindowEvent;
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
-	public static final int TANK_WIDTH = 30;
-	public static final int TANK_HEIGHT = 30;
-	private int xPosition = 50;
-	private int yPosition = 100;
 
+	Tank myTank = new Tank(30, 50);
 	Image offScreenImage = null;
 
 	public static void main(String[] args) {
@@ -40,7 +37,7 @@ public class TankClient extends Frame {
 			}
 
 		});
-		 new Thread(new PaintThread()).start();
+		new Thread(new PaintThread()).start();
 	}
 
 	/*
@@ -50,12 +47,7 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		Color oldColor = g.getColor();
-		g.setColor(Color.RED);
-
-		g.fillOval(xPosition, yPosition, TANK_WIDTH, TANK_HEIGHT);
-		// 设置回原来的颜色
-		g.setColor(oldColor);
+		myTank.draw(g);
 	}
 
 	@Override
@@ -96,30 +88,14 @@ public class TankClient extends Frame {
 
 	/**
 	 * 键盘的监听类
+	 * 
 	 * @author warrior
 	 *
 	 */
 	private class KeyMonitor extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			int code = e.getKeyCode();
-			switch (code) {
-			case KeyEvent.VK_LEFT:
-				xPosition -= 5;
-				break;
-
-			case KeyEvent.VK_RIGHT:
-				xPosition += 5;
-				break;
-			case KeyEvent.VK_UP:
-				yPosition -= 5;
-				break;
-			case KeyEvent.VK_DOWN:
-				yPosition += 5;
-				break;
-			default:
-				break;
-			}
+			myTank.keyPressed(e);
 		}
 	}
 
