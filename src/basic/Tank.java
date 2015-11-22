@@ -27,13 +27,17 @@ public class Tank {
 	// 炮筒方向
 	private Direction ptDir = Direction.D;
 
-	public Tank(int x, int y) {
+	// 正方还是反方
+	private boolean good;
+
+	public Tank(int x, int y, boolean good) {
 		this.x = x;
 		this.y = y;
+		this.good = good;
 	}
 
-	public Tank(int x, int y, TankClient tc) {
-		this(x, y);
+	public Tank(int x, int y, boolean good, TankClient tc) {
+		this(x, y, good);
 		this.tc = tc;
 	}
 
@@ -44,7 +48,10 @@ public class Tank {
 	 */
 	public void draw(Graphics g) {
 		Color oldColor = g.getColor();
-		g.setColor(Color.RED);
+		if (good)
+			g.setColor(Color.RED);
+		else
+			g.setColor(Color.BLUE);
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
