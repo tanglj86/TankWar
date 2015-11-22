@@ -8,8 +8,19 @@ public class Tank {
 	public static final int TANK_WIDTH = 30;
 	public static final int TANK_HEIGHT = 30;
 	// 移动的距离
-	public static final int MOVE_STEP = 5;
+	public static final int SPEEDX = 10;
+	public static final int SPEEDY = 10;
 	private int x, y;
+	private boolean bL = false;
+	private boolean bR = false;
+	private boolean bU = false;
+	private boolean bD = false;
+
+	enum Direction {
+		L, LU, LD, R, RU, RD, U, D, STOP
+	};
+
+	private Direction dir = Direction.STOP;
 
 	public Tank(int x, int y) {
 		this.x = x;
@@ -24,30 +35,107 @@ public class Tank {
 	public void draw(Graphics g) {
 		Color oldColor = g.getColor();
 		g.setColor(Color.RED);
-
+		move();
 		g.fillOval(x, y, TANK_WIDTH, TANK_HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
+	}
+
+	private void move() {
+		switch (dir) {
+		case L:
+			x -= SPEEDX;
+			break;
+		case R:
+			x += SPEEDX;
+			break;
+		case U:
+			y -= SPEEDY;
+			break;
+		case D:
+			y += SPEEDY;
+			break;
+		case LU:
+			x -= SPEEDX;
+			y -= SPEEDY;
+			break;
+		case LD:
+			x -= SPEEDX;
+			y += SPEEDY;
+			break;
+		case RU:
+			x += SPEEDX;
+			y -= SPEEDY;
+			break;
+		case RD:
+			x += SPEEDX;
+			y += SPEEDY;
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
 		case KeyEvent.VK_LEFT:
-			x -= MOVE_STEP;
+			bL = true;
 			break;
-
 		case KeyEvent.VK_RIGHT:
-			x += MOVE_STEP;
+			bR = true;
 			break;
 		case KeyEvent.VK_UP:
-			y -= MOVE_STEP;
+			bU = true;
 			break;
 		case KeyEvent.VK_DOWN:
-			y += MOVE_STEP;
+			bD = true;
 			break;
 		default:
 			break;
 		}
+		locateDirection();
 	}
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		switch (code) {
+		case KeyEvent.VK_LEFT:
+			bL = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			bR = false;
+			break;
+		case KeyEvent.VK_UP:
+			bU = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			bD = false;
+			break;
+		default:
+			break;
+		}
+		locateDirection();
+	}
+	private void locateDirection() {
+		if (bL && !bU && !bR && !bD)
+			dir = Direction.L;
+		else if (bL && bU && !bR && !bD)
+			dir = Direction.LU;
+		else if (!bL && bU && !bR && !bD)
+			dir = Direction.U;
+		else if (!bL && bU && bR && !bD)
+			dir = Direction.RU;
+		else if (!bL && !bU && bR && !bD)
+			dir = Direction.R;
+		else if (!bL && !bU && bR && bD)
+			dir = Direction.RD;
+		else if (!bL && !bU && !bR && bD)
+			dir = Direction.D;
+		else if (bL && !bU && !bR && bD)
+			dir = Direction.LD;
+		else if (!bL && !bU && !bR && !bD)
+			dir = Direction.STOP;
+	}
+
 }
