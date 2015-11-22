@@ -14,18 +14,15 @@ public class TankClient extends Frame{
 	
 	public void lauchFrame(String name){
 		setTitle(name);
-		setLocation(100, 100);
-		setSize(400, 400);
+		setLocation(50, 50);
+		setSize(800, 600);
+		setResizable(false);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
 
-			/* (non-Javadoc)
-			 * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-			 */
 			@Override
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
-				super.windowClosing(e);
 			}
 			
 		});
