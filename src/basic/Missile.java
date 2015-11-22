@@ -35,10 +35,10 @@ public class Missile {
 
 	public void draw(Graphics g) {
 		Color c = g.getColor();
-		move();
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(Color.BLACK);
 		g.setColor(c);
+		move();
 	}
 
 	private void move() {
