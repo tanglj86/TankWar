@@ -10,12 +10,13 @@ import basic.Tank.Direction;
 public class Missile {
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 5;
-	private static final int SPEEDX = 15;
-	private static final int SPEEDY = 15;
+	private static final int SPEEDX = 8;
+	private static final int SPEEDY = 8;
 	private int x, y;
 	private Direction dir;
 	private boolean live = true;
 	private TankClient tc;
+	private boolean good;
 
 	/**
 	 * @return the live
@@ -30,9 +31,10 @@ public class Missile {
 		this.dir = dir;
 	}
 
-	public Missile(int x, int y, Direction dir, TankClient tc) {
+	public Missile(int x, int y, boolean good, Direction dir, TankClient tc) {
 		this(x, y, dir);
 		this.tc = tc;
+		this.good = good;
 	}
 
 	public void draw(Graphics g) {
@@ -93,12 +95,14 @@ public class Missile {
 	}
 
 	public boolean hitTank(Tank t) {
-		if (this.getRect().intersects(t.getRect()) && t.isLive()) {
-			t.setLive(false);
-			this.live = false;
-			Explode e = new Explode(x, y, tc);
-			tc.explodes.add(e);
-			return true;
+		if (this.good != t.isGood()) {
+			if (this.getRect().intersects(t.getRect()) && t.isLive()) {
+				t.setLive(false);
+				this.live = false;
+				Explode e = new Explode(x, y, tc);
+				tc.explodes.add(e);
+				return true;
+			}
 		}
 		return false;
 	}

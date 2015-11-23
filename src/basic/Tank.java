@@ -10,8 +10,8 @@ public class Tank {
 	public static final int WIDTH = 30;
 	public static final int HEIGHT = 30;
 	// ÒÆ¶¯µÄ¾àÀë
-	public static final int SPEEDX = 10;
-	public static final int SPEEDY = 10;
+	public static final int SPEEDX = 6;
+	public static final int SPEEDY = 6;
 	private int x, y;
 	private boolean bL = false;
 	private boolean bR = false;
@@ -159,8 +159,11 @@ public class Tank {
 				step = r.nextInt(12) + 3;
 				int nextInt = r.nextInt(d.length);
 				this.dir = d[nextInt];
+				// this.fire();
 			}
 			step--;
+			if (r.nextInt(40) > 38)
+				fire();
 		}
 	}
 
@@ -233,7 +236,7 @@ public class Tank {
 	public Missile fire() {
 		int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
 		int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
-		Missile m = new Missile(x, y, ptDir, tc);
+		Missile m = new Missile(x, y, good, ptDir, tc);
 		tc.missiles.add(m);
 		return m;
 	}
@@ -244,6 +247,10 @@ public class Tank {
 
 	public boolean isLive() {
 		return live;
+	}
+
+	public boolean isGood() {
+		return good;
 	}
 
 	public void setLive(boolean live) {
