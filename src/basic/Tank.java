@@ -234,6 +234,8 @@ public class Tank {
 	}
 
 	public Missile fire() {
+		if(!live)
+			return null;
 		int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
 		int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
 		Missile m = new Missile(x, y, good, ptDir, tc);

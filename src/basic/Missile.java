@@ -43,8 +43,11 @@ public class Missile {
 			return;
 		}
 		Color c = g.getColor();
+		if (good)
+			g.setColor(Color.RED);
+		else
+			g.setColor(Color.BLACK);
 		g.fillOval(x, y, WIDTH, HEIGHT);
-		g.setColor(Color.BLACK);
 		g.setColor(c);
 		move();
 	}
@@ -95,7 +98,7 @@ public class Missile {
 	}
 
 	public boolean hitTank(Tank t) {
-		if (this.good != t.isGood()) {
+		if (this.good != t.isGood() && this.isLive()) {
 			if (this.getRect().intersects(t.getRect()) && t.isLive()) {
 				t.setLive(false);
 				this.live = false;
