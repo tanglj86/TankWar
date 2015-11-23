@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Tank {
 	public static final int WIDTH = 30;
@@ -19,6 +20,8 @@ public class Tank {
 
 	private TankClient tc = null;
 	private boolean live = true;
+	
+	private static Random r = new Random();
 
 	enum Direction {
 		L, LU, LD, R, RU, RD, U, D, STOP
@@ -38,9 +41,10 @@ public class Tank {
 		this.good = good;
 	}
 
-	public Tank(int x, int y, boolean good, TankClient tc) {
+	public Tank(int x, int y, Direction dir, boolean good, TankClient tc) {
 		this(x, y, good);
 		this.tc = tc;
+		this.dir = dir;
 	}
 
 	/**
@@ -49,8 +53,8 @@ public class Tank {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		if (!live){
-			if(!good)
+		if (!live) {
+			if (!good)
 				tc.tanks.remove(this);
 			return;
 		}
@@ -146,6 +150,12 @@ public class Tank {
 			x = TankClient.GAME_WIDTH - Tank.WIDTH;
 		if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT)
 			y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
+		
+		if(!good){
+			Direction[] d = Direction.values();
+			int nextInt = r.nextInt(d.length);
+			this.dir = d[nextInt];
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -221,7 +231,7 @@ public class Tank {
 		tc.missiles.add(m);
 		return m;
 	}
-	
+
 	public Rectangle getRect() {
 		return new Rectangle(x, y, WIDTH, HEIGHT);
 	}

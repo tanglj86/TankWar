@@ -11,11 +11,13 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import basic.Tank.Direction;
+
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
 
-	Tank myTank = new Tank(30, 50, true, this);
+	Tank myTank = new Tank(30, 50, Direction.STOP, true, this);
 	List<Missile> missiles = new ArrayList<Missile>();
 	List<Explode> explodes = new ArrayList<Explode>();
 	List<Tank> tanks = new ArrayList<Tank>();
@@ -29,7 +31,7 @@ public class TankClient extends Frame {
 
 	public void lauchFrame(String name) {
 		for (int i = 0; i < 10; i++) {
-			tanks.add(new Tank(50 + 40 * (i + 1), 50, false, this));
+			tanks.add(new Tank(50 + 40 * (i + 1), 50, Direction.D, false, this));
 		}
 		setTitle(name);
 		setLocation(50, 50);
