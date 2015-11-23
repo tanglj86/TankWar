@@ -16,7 +16,7 @@ public class TankClient extends Frame {
 	public static final int GAME_HEIGHT = 600;
 
 	Tank myTank = new Tank(30, 50, true, this);
-	Tank enemyTank = new Tank(50, 70, false, this);
+	Tank enemyTank = new Tank(100, 300, false, this);
 	List<Missile> missiles = new ArrayList<Missile>();
 	Image offScreenImage = null;
 
@@ -51,6 +51,7 @@ public class TankClient extends Frame {
 		enemyTank.draw(g);
 		for (int i = 0; i < missiles.size(); i++) {
 			Missile m = missiles.get(i);
+			m.hitTank(enemyTank);
 			m.draw(g);
 		}
 	}

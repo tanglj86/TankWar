@@ -2,6 +2,7 @@ package basic;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Tank {
@@ -17,6 +18,7 @@ public class Tank {
 	private boolean bD = false;
 
 	private TankClient tc = null;
+	private boolean live = true;
 
 	enum Direction {
 		L, LU, LD, R, RU, RD, U, D, STOP
@@ -47,6 +49,8 @@ public class Tank {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
+		if (!live)
+			return;
 		Color oldColor = g.getColor();
 		if (good)
 			g.setColor(Color.RED);
@@ -213,6 +217,18 @@ public class Tank {
 		Missile m = new Missile(x, y, ptDir, tc);
 		tc.missiles.add(m);
 		return m;
+	}
+	
+	public Rectangle getRect() {
+		return new Rectangle(x, y, WIDTH, HEIGHT);
+	}
+
+	public boolean isLive() {
+		return live;
+	}
+
+	public void setLive(boolean live) {
+		this.live = live;
 	}
 
 }
