@@ -49,8 +49,11 @@ public class Tank {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		if (!live)
+		if (!live){
+			if(!good)
+				tc.tanks.remove(this);
 			return;
+		}
 		Color oldColor = g.getColor();
 		if (good)
 			g.setColor(Color.RED);

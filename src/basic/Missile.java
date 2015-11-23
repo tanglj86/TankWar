@@ -3,6 +3,7 @@ package basic;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 
 import basic.Tank.Direction;
 
@@ -95,7 +96,17 @@ public class Missile {
 		if (this.getRect().intersects(t.getRect()) && t.isLive()) {
 			t.setLive(false);
 			this.live = false;
+			Explode e = new Explode(x, y, tc);
+			tc.explodes.add(e);
 			return true;
+		}
+		return false;
+	}
+
+	public boolean hitTanks(List<Tank> tanks) {
+		for (int i = 0; i < tanks.size(); i++) {
+			if (hitTank(tanks.get(i)))
+				return true;
 		}
 		return false;
 	}
