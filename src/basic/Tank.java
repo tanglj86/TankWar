@@ -20,8 +20,10 @@ public class Tank {
 
 	private TankClient tc = null;
 	private boolean live = true;
-	
+
 	private static Random r = new Random();
+
+	private int step = r.nextInt(12) + 13;
 
 	enum Direction {
 		L, LU, LD, R, RU, RD, U, D, STOP
@@ -150,11 +152,15 @@ public class Tank {
 			x = TankClient.GAME_WIDTH - Tank.WIDTH;
 		if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT)
 			y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
-		
-		if(!good){
+
+		if (!good) {
 			Direction[] d = Direction.values();
-			int nextInt = r.nextInt(d.length);
-			this.dir = d[nextInt];
+			if (step == 0) {
+				step = r.nextInt(12) + 3;
+				int nextInt = r.nextInt(d.length);
+				this.dir = d[nextInt];
+			}
+			step--;
 		}
 	}
 
