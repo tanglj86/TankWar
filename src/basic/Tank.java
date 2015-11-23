@@ -13,6 +13,7 @@ public class Tank {
 	public static final int SPEEDX = 6;
 	public static final int SPEEDY = 6;
 	private int x, y;
+	private int oldX, oldY;
 	private boolean bL = false;
 	private boolean bR = false;
 	private boolean bU = false;
@@ -40,6 +41,8 @@ public class Tank {
 	public Tank(int x, int y, boolean good) {
 		this.x = x;
 		this.y = y;
+		this.oldX = x;
+		this.oldY = y;
 		this.good = good;
 	}
 
@@ -109,6 +112,8 @@ public class Tank {
 	}
 
 	private void move() {
+		this.oldX = x;
+		this.oldY = y;
 		switch (dir) {
 		case L:
 			x -= SPEEDX;
@@ -234,7 +239,7 @@ public class Tank {
 	}
 
 	public Missile fire() {
-		if(!live)
+		if (!live)
 			return null;
 		int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
 		int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
@@ -257,6 +262,20 @@ public class Tank {
 
 	public void setLive(boolean live) {
 		this.live = live;
+	}
+
+	private void fallBack(){
+		x = oldX;
+		y = oldY;
+	}
+	public boolean collideWall(Wall w) {
+		if (this.isLive()) {
+			if (this.getRect().intersects(w.getRect())) {
+				this.fallBack();
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

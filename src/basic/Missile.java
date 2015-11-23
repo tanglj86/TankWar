@@ -111,9 +111,21 @@ public class Missile {
 	}
 
 	public boolean hitTanks(List<Tank> tanks) {
-		for (int i = 0; i < tanks.size(); i++) {
-			if (hitTank(tanks.get(i)))
+		if (this.isLive()) {
+			for (int i = 0; i < tanks.size(); i++) {
+				if (hitTank(tanks.get(i)))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hitWall(Wall w) {
+		if (this.isLive()) {
+			if (this.getRect().intersects(w.getRect())) {
+				this.live = false;
 				return true;
+			}
 		}
 		return false;
 	}
