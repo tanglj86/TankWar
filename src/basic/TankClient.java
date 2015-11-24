@@ -37,7 +37,7 @@ public class TankClient extends Frame {
 		for (int i = 0; i < 10; i++) {
 			int rn = r.nextInt(GAME_HEIGHT / 2);
 			int dir = r.nextInt(d.length);
-			tanks.add(new Tank(50 + 20 * (i + 1) + rn, 50 + 20 * (i + 1) + rn,
+			tanks.add(new Tank(50 + 50 * (i + 1) + rn, 10 + 40 * (i + 1) + rn,
 					d[dir], false, this));
 		}
 		setTitle(name);
@@ -84,6 +84,7 @@ public class TankClient extends Frame {
 			Tank t = tanks.get(i);
 			t.collideWall(w1);
 			t.collideWall(w2);
+			t.collideTanks(tanks);
 			t.draw(g);
 		}
 	}

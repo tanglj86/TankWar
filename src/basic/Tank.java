@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 public class Tank {
@@ -211,6 +212,9 @@ public class Tank {
 		case KeyEvent.VK_DOWN:
 			bD = false;
 			break;
+		case KeyEvent.VK_A:
+			this.superFire();
+			break;
 		default:
 			break;
 		}
@@ -248,6 +252,25 @@ public class Tank {
 		return m;
 	}
 
+	private Missile fire(Direction dir) {
+		if (!live)
+			return null;
+		int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
+		int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
+		Missile m = new Missile(x, y, good, dir, tc);
+		tc.missiles.add(m);
+		return m;
+	}
+
+	public void superFire() {
+		if (!live)
+			return;
+		Direction[] dirs = Direction.values();
+		for (int i = 0; i < dirs.length - 1; i++) {
+			fire(dirs[i]);
+		}
+	}
+
 	public Rectangle getRect() {
 		return new Rectangle(x, y, WIDTH, HEIGHT);
 	}
@@ -264,15 +287,31 @@ public class Tank {
 		this.live = live;
 	}
 
-	private void fallBack(){
+	private void fallBack() {
 		x = oldX;
 		y = oldY;
 	}
+
 	public boolean collideWall(Wall w) {
 		if (this.isLive()) {
 			if (this.getRect().intersects(w.getRect())) {
 				this.fallBack();
 				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean collideTanks(List<Tank> lists) {
+		if (this.isLive()) {
+			for (int i = 0; i < lists.size(); i++) {
+				Tank tank = lists.get(i);
+				if (this != tank) {
+					if (this.getRect().intersects(tank.getRect())) {
+						this.fallBack();
+						return true;
+					}
+				}
 			}
 		}
 		return false;
