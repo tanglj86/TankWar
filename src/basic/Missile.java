@@ -2,8 +2,12 @@ package basic;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Missile {
 	public static final int WIDTH = 8;
@@ -15,6 +19,37 @@ public class Missile {
 	private boolean live = true;
 	private TankClient tc;
 	private boolean good;
+	private static Toolkit tk = Toolkit.getDefaultToolkit();
+	private static Image[] images = null;
+	private static Map<String, Image> missileImages = new HashMap<String, Image>();
+	static {
+		images = new Image[] {
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileD.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileL.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileLD.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileLU.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileR.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileRD.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileRU.gif")),
+				tk.getImage(Missile.class.getClassLoader().getResource(
+						"images/missileU.gif")) };
+
+		missileImages.put("D", images[0]);
+		missileImages.put("L", images[1]);
+		missileImages.put("LD", images[2]);
+		missileImages.put("LU", images[3]);
+		missileImages.put("R", images[4]);
+		missileImages.put("RD", images[5]);
+		missileImages.put("RU", images[6]);
+		missileImages.put("U", images[7]);
+	}
 
 	/**
 	 * @return the live
@@ -45,7 +80,35 @@ public class Missile {
 			g.setColor(Color.RED);
 		else
 			g.setColor(Color.BLACK);
-		g.fillOval(x, y, WIDTH, HEIGHT);
+		switch (dir) {
+		case L:
+			g.drawImage(missileImages.get("L"), x, y, null);
+			break;
+		case R:
+			g.drawImage(missileImages.get("R"), x, y, null);
+			break;
+		case U:
+			g.drawImage(missileImages.get("U"), x, y, null);
+			break;
+		case D:
+			g.drawImage(missileImages.get("D"), x, y, null);
+			break;
+		case LU:
+			g.drawImage(missileImages.get("LU"), x, y, null);
+			break;
+		case LD:
+			g.drawImage(missileImages.get("LD"), x, y, null);
+			break;
+		case RU:
+			g.drawImage(missileImages.get("RU"), x, y, null);
+			break;
+		case RD:
+			g.drawImage(missileImages.get("RD"), x, y, null);
+			break;
+
+		default:
+			break;
+		}
 		g.setColor(c);
 		move();
 	}

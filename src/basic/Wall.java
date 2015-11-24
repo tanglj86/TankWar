@@ -17,7 +17,7 @@ public class Wall {
 	
 	public void draw(Graphics g){
 		Color oldColor = g.getColor();
-		g.setColor(Color.black);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(x, y, w, h);
 		g.setColor(oldColor);
 		

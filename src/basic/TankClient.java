@@ -62,8 +62,8 @@ public class TankClient extends Frame {
 		g.drawString("missiles count:" + missiles.size(), 20, 40);
 		g.drawString("tanks    count:" + tanks.size(), 20, 60);
 		g.drawString("explode  count:" + explodes.size(), 20, 80);
-		g.drawString("life  amount  :" + myTank.getLife(), 20, 100);
-		
+		g.drawString("life     amount:" + myTank.getLife(), 20, 100);
+
 		if (tanks.size() == 0) {
 			Direction[] d = Direction.values();
 			for (int i = 0; i < 10; i++) {
@@ -108,7 +108,7 @@ public class TankClient extends Frame {
 		}
 		Graphics graphics = offScreenImage.getGraphics();
 		Color color = graphics.getColor();
-		graphics.setColor(Color.GREEN);
+		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 		graphics.setColor(color);
 		paint(graphics);

@@ -2,14 +2,18 @@ package basic;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Tank {
-	public static final int WIDTH = 30;
-	public static final int HEIGHT = 30;
+	public static final int WIDTH = 48;
+	public static final int HEIGHT = 48;
 	// 移动的距离
 	public static final int SPEEDX = 6;
 	public static final int SPEEDY = 6;
@@ -51,6 +55,37 @@ public class Tank {
 
 	// 正方还是反方
 	private boolean good;
+	private static Toolkit tk = Toolkit.getDefaultToolkit();
+	private static Image[] images = null;
+	// L, LU, LD, R, RU, RD, U, D, STOP
+	private static Map<String, Image> tankImages = new HashMap<String, Image>();
+	static {
+		images = new Image[] {
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankL.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankLU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankLD.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankR.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankRU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankRD.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource(
+						"images/tankD.gif")) };
+		tankImages.put("L", images[0]);
+		tankImages.put("LU", images[1]);
+		tankImages.put("LD", images[2]);
+		tankImages.put("R", images[3]);
+		tankImages.put("RU", images[4]);
+		tankImages.put("RD", images[5]);
+		tankImages.put("U", images[6]);
+		tankImages.put("D", images[7]);
+	}
 
 	public Tank(int x, int y, boolean good) {
 		this.x = x;
@@ -82,7 +117,7 @@ public class Tank {
 			g.setColor(Color.RED);
 		else
 			g.setColor(Color.BLUE);
-		g.fillOval(x, y, WIDTH, HEIGHT);
+		// g.fillOval(x, y, WIDTH, HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
 		if (good)
@@ -91,35 +126,28 @@ public class Tank {
 
 		switch (ptDir) {
 		case L:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y
-					+ Tank.HEIGHT / 2);
+			g.drawImage(tankImages.get("L"), x, y, null);
 			break;
 		case R:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH,
-					y + Tank.HEIGHT / 2);
+			g.drawImage(tankImages.get("R"), x, y, null);
 			break;
 		case U:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH
-					/ 2, y);
+			g.drawImage(tankImages.get("U"), x, y, null);
 			break;
 		case D:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH
-					/ 2, y + Tank.HEIGHT);
+			g.drawImage(tankImages.get("D"), x, y, null);
 			break;
 		case LU:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y);
+			g.drawImage(tankImages.get("LU"), x, y, null);
 			break;
 		case LD:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y
-					+ Tank.HEIGHT);
+			g.drawImage(tankImages.get("LD"), x, y, null);
 			break;
 		case RU:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH,
-					y);
+			g.drawImage(tankImages.get("RU"), x, y, null);
 			break;
 		case RD:
-			g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH,
-					y + Tank.HEIGHT);
+			g.drawImage(tankImages.get("RD"), x, y, null);
 			break;
 
 		default:
@@ -192,7 +220,7 @@ public class Tank {
 		int code = e.getKeyCode();
 		switch (code) {
 		case KeyEvent.VK_F2:
-			if(!this.live){
+			if (!this.live) {
 				this.live = true;
 				this.life = 100;
 			}
@@ -293,7 +321,7 @@ public class Tank {
 	}
 
 	public Rectangle getRect() {
-		return new Rectangle(x, y, WIDTH, HEIGHT);
+		return new Rectangle(x, y, HEIGHT, WIDTH);
 	}
 
 	public boolean isLive() {
@@ -337,9 +365,9 @@ public class Tank {
 		}
 		return false;
 	}
-	
+
 	public boolean eat(Blood b) {
-		if(this.live && b.isLive() && this.getRect().intersects(b.getRect())) {
+		if (this.live && b.isLive() && this.getRect().intersects(b.getRect())) {
 			this.life = 100;
 			b.setLive(false);
 			return true;
