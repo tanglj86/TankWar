@@ -65,6 +65,16 @@ public class TankClient extends Frame {
 		g.drawString("tanks    count:" + tanks.size(), 20, 60);
 		g.drawString("explode  count:" + explodes.size(), 20, 80);
 		g.drawString("life  amount  :" + myTank.getLife(), 20, 100);
+		
+		if (tanks.size() == 0) {
+			Direction[] d = Direction.values();
+			for (int i = 0; i < 10; i++) {
+				int rn = r.nextInt(GAME_HEIGHT / 2);
+				int dir = r.nextInt(d.length);
+				tanks.add(new Tank(50 + 50 * (i + 1) + rn, 10 + 40 * (i + 1)
+						+ rn, d[dir], false, this));
+			}
+		}
 		myTank.draw(g);
 		b.draw(g);
 		myTank.eat(b);

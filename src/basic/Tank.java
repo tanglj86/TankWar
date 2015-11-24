@@ -195,6 +195,12 @@ public class Tank {
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		switch (code) {
+		case KeyEvent.VK_F2:
+			if(!this.live){
+				this.live = true;
+				this.life = 100;
+			}
+			break;
 		case KeyEvent.VK_LEFT:
 			bL = true;
 			break;
