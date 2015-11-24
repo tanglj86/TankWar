@@ -44,10 +44,6 @@ public class Tank {
 		this.life = life;
 	}
 
-	enum Direction {
-		L, LU, LD, R, RU, RD, U, D, STOP
-	};
-
 	// 坦克方向
 	private Direction dir = Direction.STOP;
 	// 炮筒方向
