@@ -59,6 +59,8 @@ public class TankClient extends Frame {
 
 	@Override
 	public void paint(Graphics g) {
+		Color oldColor = g.getColor();
+		g.setColor(Color.RED);
 		g.drawString("missiles count:" + missiles.size(), 20, 40);
 		g.drawString("tanks    count:" + tanks.size(), 20, 60);
 		g.drawString("explode  count:" + explodes.size(), 20, 80);
@@ -99,6 +101,7 @@ public class TankClient extends Frame {
 			t.collideTanks(tanks);
 			t.draw(g);
 		}
+		g.setColor(oldColor);
 	}
 
 	@Override
