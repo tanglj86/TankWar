@@ -24,8 +24,25 @@ public class Tank {
 	private boolean live = true;
 
 	private static Random r = new Random();
+	private BloodBar bb = new BloodBar();
 
 	private int step = r.nextInt(12) + 13;
+	private int life = 100;
+
+	/**
+	 * @return the life
+	 */
+	public int getLife() {
+		return life;
+	}
+
+	/**
+	 * @param life
+	 *            the life to set
+	 */
+	public void setLife(int life) {
+		this.life = life;
+	}
 
 	enum Direction {
 		L, LU, LD, R, RU, RD, U, D, STOP
@@ -72,6 +89,8 @@ public class Tank {
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
+		if (good)
+			bb.draw(g);
 		move();
 
 		switch (ptDir) {
@@ -317,4 +336,14 @@ public class Tank {
 		return false;
 	}
 
+	private class BloodBar {
+		public void draw(Graphics g) {
+			Color c = g.getColor();
+			g.setColor(Color.RED);
+			g.drawRect(x, y - 10, WIDTH, 5);
+			int w = WIDTH * life / 100;
+			g.fillRect(x, y - 10, w, 5);
+			g.setColor(c);
+		}
+	}
 }

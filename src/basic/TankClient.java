@@ -61,8 +61,9 @@ public class TankClient extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		g.drawString("missiles count:" + missiles.size(), 20, 40);
-		g.drawString("tanks count:" + tanks.size(), 20, 60);
-		g.drawString("explode count:" + explodes.size(), 20, 80);
+		g.drawString("tanks    count:" + tanks.size(), 20, 60);
+		g.drawString("explode  count:" + explodes.size(), 20, 80);
+		g.drawString("life  amount  :" + myTank.getLife(), 20, 100);
 		myTank.draw(g);
 		w1.draw(g);
 		w2.draw(g);
