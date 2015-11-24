@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 public class Explode {
 	int x, y;
 	private boolean live = true;
+	private static boolean init = false;
 
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	private static Image[] images = {
@@ -45,6 +46,11 @@ public class Explode {
 	}
 
 	public void draw(Graphics g) {
+		if(!init){
+			for (int i = 0; i < images.length; i++) {
+				g.drawImage(images[i], -100, -100, null);
+			}
+		}
 		if (!live) {
 			tc.explodes.remove(this);
 			return;
