@@ -8,8 +8,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 public class TankClient extends Frame {
@@ -32,8 +34,17 @@ public class TankClient extends Frame {
 	}
 
 	public void lauchFrame(String name) {
+		int tankCount = 10;
+		Properties prop = new Properties();
+		try {
+			prop.load(this.getClass().getClassLoader()
+					.getResourceAsStream("config/tank.properties"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		tankCount = Integer.parseInt(prop.getProperty("initialTankCount"));
 		Direction[] d = Direction.values();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < tankCount; i++) {
 			int rn = r.nextInt(GAME_HEIGHT / 2);
 			int dir = r.nextInt(d.length);
 			tanks.add(new Tank(50 + 50 * (i + 1) + rn, 10 + 40 * (i + 1) + rn,
