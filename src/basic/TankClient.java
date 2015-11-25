@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import basic.Tank.Direction;
-
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
@@ -23,7 +21,7 @@ public class TankClient extends Frame {
 	List<Missile> missiles = new ArrayList<Missile>();
 	List<Explode> explodes = new ArrayList<Explode>();
 	List<Tank> tanks = new ArrayList<Tank>();
-
+	NetClient nc = new NetClient(this);
 	Image offScreenImage = null;
 
 	public static void main(String[] args) {
@@ -31,14 +29,17 @@ public class TankClient extends Frame {
 		tc.lauchFrame("TankWar");
 	}
 
+	/**
+	 * @param name
+	 */
 	public void lauchFrame(String name) {
-		Direction[] d = Direction.values();
+		/*Direction[] d = Direction.values();
 		for (int i = 0; i < 10; i++) {
 			int rn = r.nextInt(GAME_HEIGHT / 2);
 			int dir = r.nextInt(d.length);
 			tanks.add(new Tank(50 + 20 * (i + 1) + rn, 50 + 20 * (i + 1) + rn,
 					d[dir], false, this));
-		}
+		}*/
 		setTitle(name);
 		setLocation(50, 50);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -55,6 +56,7 @@ public class TankClient extends Frame {
 
 		});
 		new Thread(new PaintThread()).start();
+		nc.connect("127.0.0.1", TankServer.TCP_PORT);
 	}
 
 	@Override

@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.List;
 
-import basic.Tank.Direction;
-
 public class Missile {
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 5;

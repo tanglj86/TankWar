@@ -25,10 +25,6 @@ public class Tank {
 
 	private int step = r.nextInt(12) + 13;
 
-	enum Direction {
-		L, LU, LD, R, RU, RD, U, D, STOP
-	};
-
 	// 坦克方向
 	private Direction dir = Direction.STOP;
 	// 炮筒方向
@@ -36,6 +32,7 @@ public class Tank {
 
 	// 正方还是反方
 	private boolean good;
+	public int id;
 
 	public Tank(int x, int y, boolean good) {
 		this.x = x;
@@ -66,6 +63,7 @@ public class Tank {
 		else
 			g.setColor(Color.BLUE);
 		g.fillOval(x, y, WIDTH, HEIGHT);
+		g.drawString("id:" + id, x, y - 10);
 		// 设置回原来的颜色
 		g.setColor(oldColor);
 		move();
@@ -234,7 +232,7 @@ public class Tank {
 	}
 
 	public Missile fire() {
-		if(!live)
+		if (!live)
 			return null;
 		int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
 		int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
