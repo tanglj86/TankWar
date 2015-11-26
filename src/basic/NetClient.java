@@ -15,12 +15,14 @@ public class NetClient {
 	TankClient tc;
 
 	DatagramSocket ds = null;
+	private String IP;
 
 	public NetClient(TankClient tc) {
 		this.tc = tc;
 	}
 
 	public void connect(String ip, int port) {
+		this.IP = ip;
 		try {
 			ds = new DatagramSocket(udpPort);
 		} catch (SocketException e) {
@@ -60,7 +62,7 @@ public class NetClient {
 	}
 
 	public void send(Msg msg) {
-		msg.send(ds, "127.0.0.1", TankServer.UDP_PORT);
+		msg.send(ds, IP, TankServer.UDP_PORT);
 	}
 
 	private class UDPReceiveThread implements Runnable {
