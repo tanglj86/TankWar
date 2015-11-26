@@ -11,7 +11,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class NetClient {
-	private static int UDP_PORT_START = 2238;
+	private static int UDP_PORT_START = 2239;
 	private int udpPort;
 	TankClient tc;
 

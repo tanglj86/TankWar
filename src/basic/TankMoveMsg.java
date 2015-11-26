@@ -15,8 +15,10 @@ public class TankMoveMsg implements Msg {
 	Direction dir;
 	private TankClient tc;
 
-	public TankMoveMsg(int id, Direction dir) {
+	public TankMoveMsg(int id, int x, int y,Direction dir) {
 		this.id = id;
+		this.x = x;
+		this.y = y;
 		this.dir = dir;
 	}
 
@@ -31,6 +33,8 @@ public class TankMoveMsg implements Msg {
 		try {
 			dos.writeInt(msgType);
 			dos.writeInt(id);
+			dos.writeInt(x);
+			dos.writeInt(y);
 			dos.writeInt(dir.ordinal());
 
 		} catch (Exception e) {
@@ -53,6 +57,8 @@ public class TankMoveMsg implements Msg {
 			if (id == this.tc.myTank.id) {
 				return;
 			}
+			int x = dis.readInt();
+			int y = dis.readInt();
 			int dir1 = dis.readInt();
 			Direction dir = Direction.values()[dir1];
 			System.out.println("id: " + id + ",dir: " + dir.toString());
@@ -60,6 +66,8 @@ public class TankMoveMsg implements Msg {
 			for (int i = 0; i < tc.tanks.size(); i++) {
 				Tank tank = tc.tanks.get(i);
 				if (tank.id == id) {
+					tank.x = x;
+					tank.y = y;
 					tank.dir = dir;
 					exist = true;
 					break;

@@ -230,8 +230,8 @@ public class Tank {
 			dir = Direction.LD;
 		else if (!bL && !bU && !bR && !bD)
 			dir = Direction.STOP;
-		if(dir != oldDir){
-			TankMoveMsg msg = new TankMoveMsg(id, dir);
+		if (dir != oldDir) {
+			TankMoveMsg msg = new TankMoveMsg(id, x, y, dir);
 			tc.nc.send(msg);
 		}
 	}
