@@ -12,7 +12,7 @@ public class Tank {
 	// 移动的距离
 	public static final int SPEEDX = 6;
 	public static final int SPEEDY = 6;
-	private int x, y;
+	int x, y;
 	private boolean bL = false;
 	private boolean bR = false;
 	private boolean bU = false;
@@ -26,12 +26,12 @@ public class Tank {
 	private int step = r.nextInt(12) + 13;
 
 	// 坦克方向
-	private Direction dir = Direction.STOP;
+	Direction dir = Direction.STOP;
 	// 炮筒方向
 	private Direction ptDir = Direction.D;
 
 	// 正方还是反方
-	private boolean good;
+	boolean good;
 	public int id;
 
 	public Tank(int x, int y, boolean good) {
