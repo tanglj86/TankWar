@@ -11,7 +11,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class NetClient {
-	private static int UDP_PORT_START = 2233;
+	private static int UDP_PORT_START = 2238;
 	private int udpPort;
 	TankClient tc;
 
@@ -88,12 +88,12 @@ public class NetClient {
 			Msg msg = null;
 			switch (msgType) {
 			case Msg.TANK_NEW_MSG:
-				System.out.println("a TANK_NEW_MSG received from server");
+				// System.out.println("a TANK_NEW_MSG received from server");
 				msg = new TankNewMsg(NetClient.this.tc);
 				msg.parse(dis);
 				break;
 			case Msg.TANK_MOVE_MSG:
-				System.out.println("a TANK_MOVE_MSG received from server");
+				// System.out.println("a TANK_MOVE_MSG received from server");
 				msg = new TankMoveMsg(NetClient.this.tc);
 				msg.parse(dis);
 				break;

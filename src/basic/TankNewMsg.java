@@ -8,7 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 
-public class TankNewMsg implements Msg{
+public class TankNewMsg implements Msg {
 	int msgType = Msg.TANK_NEW_MSG;
 	Tank tank;
 	private TankClient tc;
@@ -16,8 +16,8 @@ public class TankNewMsg implements Msg{
 	public TankNewMsg(Tank t) {
 		this.tank = t;
 	}
-	
-	public TankNewMsg(TankClient tc){
+
+	public TankNewMsg(TankClient tc) {
 		this.tc = tc;
 	}
 
@@ -48,19 +48,35 @@ public class TankNewMsg implements Msg{
 	public void parse(DataInputStream dis) {
 		try {
 			int id = dis.readInt();
-			if(id == this.tc.myTank.id){
+			if (id == this.tc.myTank.id) {
 				return;
 			}
+			
 			int x = dis.readInt();
 			int y = dis.readInt();
 			int dir1 = dis.readInt();
 			Direction dir = Direction.values()[dir1];
 			boolean good = dis.readBoolean();
-			System.out.println("id: " + id + ",x: " + x + ",y: " + y + ",dir: "
-					+ dir.toString() + ",is good: " + good);
-			Tank t = new Tank(x, y, dir,good,tc);
-			t.id = id;
-			tc.tanks.add(t);
+			// System.out.println("id: " + id + ",x: " + x + ",y: " + y +
+			// ",dir: "
+			// + dir.toString() + ",is good: " + good);
+			boolean exist = false;
+			for (int i = 0; i < tc.tanks.size(); i++) {
+				Tank tank2 = tc.tanks.get(i);
+				if (tank2.id == id) {
+					exist = true;
+					break;
+				}
+
+			}
+			if (!exist) {
+				TankNewMsg tnMsg = new TankNewMsg(tc.myTank);
+				tc.nc.send(tnMsg);
+				
+				Tank t = new Tank(x, y, dir, good, tc);
+				t.id = id;
+				tc.tanks.add(t);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
