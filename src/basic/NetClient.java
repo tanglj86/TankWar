@@ -34,6 +34,10 @@ public class NetClient {
 			DataInputStream dis = new DataInputStream(s.getInputStream());
 			int id = dis.readInt();
 			tc.myTank.id = id;
+			if (id % 2 == 0)
+				tc.myTank.good = false;
+			else
+				tc.myTank.good = true;
 			System.out.println("Connected to server and be given a ID:" + id);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -98,6 +102,16 @@ public class NetClient {
 			case Msg.MISSILE_NEW_MSG:
 				// System.out.println("a TANK_MOVE_MSG received from server");
 				msg = new MissileNewMsg(NetClient.this.tc);
+				msg.parse(dis);
+				break;
+			case Msg.TANK_DEAD_MSG:
+				// System.out.println("a TANK_MOVE_MSG received from server");
+				msg = new TankDeadMsg(NetClient.this.tc);
+				msg.parse(dis);
+				break;
+			case Msg.MISSILE_DEAD_MSG:
+				// System.out.println("a TANK_MOVE_MSG received from server");
+				msg = new MissileDeadMsg(NetClient.this.tc);
 				msg.parse(dis);
 				break;
 			}

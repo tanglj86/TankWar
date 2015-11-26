@@ -12,10 +12,12 @@ public class Missile {
 	private static final int SPEEDY = 8;
 	int x, y;
 	Direction dir;
-	private boolean live = true;
+	boolean live = true;
 	private TankClient tc;
 	boolean good;
 	int tankId;
+	private static int ID;
+	int id;
 
 	/**
 	 * @return the live
@@ -29,6 +31,7 @@ public class Missile {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.id = ID++;
 	}
 
 	public Missile(int tankId, int x, int y, boolean good, Direction dir,

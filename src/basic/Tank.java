@@ -151,7 +151,7 @@ public class Tank {
 		if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT)
 			y = TankClient.GAME_HEIGHT - Tank.HEIGHT;
 
-		if (!good) {
+		/*if (!good) {
 			Direction[] d = Direction.values();
 			if (step == 0) {
 				step = r.nextInt(12) + 3;
@@ -162,7 +162,7 @@ public class Tank {
 			step--;
 			if (r.nextInt(40) > 38)
 				fire();
-		}
+		}*/
 	}
 
 	public void keyPressed(KeyEvent e) {
