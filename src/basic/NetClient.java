@@ -11,7 +11,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class NetClient {
-	private static int UDP_PORT_START = 2224;
+	private static int UDP_PORT_START = 2233;
 	private int udpPort;
 	TankClient tc;
 
@@ -57,8 +57,8 @@ public class NetClient {
 		new Thread(new UDPReceiveThread()).start();
 	}
 
-	public void send(TankNewMsg msg) {
-		msg.send(ds,"127.0.0.1", TankServer.UDP_PORT);
+	public void send(Msg msg) {
+		msg.send(ds, "127.0.0.1", TankServer.UDP_PORT);
 	}
 
 	private class UDPReceiveThread implements Runnable {
@@ -73,7 +73,6 @@ public class NetClient {
 				try {
 					ds.receive(dp);
 					parse(dp);
-					System.out.println("a packeage received from server");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -81,11 +80,24 @@ public class NetClient {
 
 		}
 
-		private void parse(DatagramPacket dp) {
-			ByteArrayInputStream bais = new ByteArrayInputStream(buf,0,dp.getLength());
+		private void parse(DatagramPacket dp) throws IOException {
+			ByteArrayInputStream bais = new ByteArrayInputStream(buf, 0,
+					dp.getLength());
 			DataInputStream dis = new DataInputStream(bais);
-			TankNewMsg msg = new TankNewMsg(NetClient.this.tc);
-			msg.parse(dis);
+			int msgType = dis.readInt();
+			Msg msg = null;
+			switch (msgType) {
+			case Msg.TANK_NEW_MSG:
+				System.out.println("a TANK_NEW_MSG received from server");
+				msg = new TankNewMsg(NetClient.this.tc);
+				msg.parse(dis);
+				break;
+			case Msg.TANK_MOVE_MSG:
+				System.out.println("a TANK_MOVE_MSG received from server");
+				msg = new TankMoveMsg(NetClient.this.tc);
+				msg.parse(dis);
+				break;
+			}
 		}
 
 	}

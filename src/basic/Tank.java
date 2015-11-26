@@ -211,6 +211,7 @@ public class Tank {
 	}
 
 	private void locateDirection() {
+		Direction oldDir = this.dir;
 		if (bL && !bU && !bR && !bD)
 			dir = Direction.L;
 		else if (bL && bU && !bR && !bD)
@@ -229,6 +230,10 @@ public class Tank {
 			dir = Direction.LD;
 		else if (!bL && !bU && !bR && !bD)
 			dir = Direction.STOP;
+		if(dir != oldDir){
+			TankMoveMsg msg = new TankMoveMsg(id, dir);
+			tc.nc.send(msg);
+		}
 	}
 
 	public Missile fire() {

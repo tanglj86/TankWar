@@ -84,23 +84,24 @@ public class TankServer {
 						ds.receive(dp);
 						for (int i = 0; i < clients.size(); i++) {
 							Client client = clients.get(i);
-							dp.setSocketAddress(new InetSocketAddress(client.IP, client.udpPort));
+							dp.setSocketAddress(new InetSocketAddress(
+									client.IP, client.udpPort));
 							ds.send(dp);
+							System.out.println("a packeage sendout " + i);
 						}
-						System.out.println("a packeage received");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 			} catch (SocketException e) {
 				e.printStackTrace();
-			}finally{
+			} finally {
 				if (ds != null) {
 					ds.close();
 					ds = null;
 				}
 			}
-			
+
 		}
 
 	}
