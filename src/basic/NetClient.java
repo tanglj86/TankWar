@@ -95,6 +95,11 @@ public class NetClient {
 				msg = new TankMoveMsg(NetClient.this.tc);
 				msg.parse(dis);
 				break;
+			case Msg.MISSILE_NEW_MSG:
+				// System.out.println("a TANK_MOVE_MSG received from server");
+				msg = new MissileNewMsg(NetClient.this.tc);
+				msg.parse(dis);
+				break;
 			}
 		}
 
